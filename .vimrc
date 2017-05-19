@@ -1,4 +1,4 @@
-" Vundle  
+" Vundle 
 set nocompatible                            " Use vim not vi
 filetype off 
 
@@ -18,21 +18,34 @@ Plugin 'terryma/vim-multiple-cursors'       " Multi select ala Sublime
 Plugin 'majutsushi/tagbar'                  " ctags browser
 Plugin 'vim-airline/vim-airline'            " better status bar
 Plugin 'vim-airline/vim-airline-themes'     " better status bar themes
+Plugin 'yuttie/comfortable-motion.vim'      " Smooth scrolling :-)
+
+" Language plugins
+
+" Erlang 
+" Better Erlang plugins? https://vim-erlang.github.io/ 
+Plugin 'vim-erlang/vim-erlang-omnicomplete.git'     " Omnicompletion via |i_CTRL-X_CTRL-O|
+"Plugin 'vim-erlang/vim-erlang-compiler.git'        " Erlang syntax checking and copiler - TODO will conflict with Syntastic? why not just use :make ?
+"Plugin 'vim-erlang/vim-erlang-tags.git'            " Generate module:function tags using :ErlangTags and set tags^=./tags
+
+" Elixir
+Plugin 'elixir-lang/vim-elixir'             " Elixir support, syntax highlighting, filetype detection and auto indentation etc
 
 call vundle#end()
 filetyp plugin indent on                    " Enable plug-ins, file type detection and indentation 
 
 " L&F 
-if has('gui_running')                       " Which solarized theme light or dark
-    set background=dark
-else
-    set background=dark
+if has('gui_running')                      
+    set lines=999 columns=999               " Open full screen
 endif
+let g:solarized_bold=0                      " Turn off bold fixme's, todo's etc. default value is 1
+syntax enable                               " Switch syntax highlighting on, when the terminal has colors
+set background=dark                         " Which solarized theme light or dark
 colorscheme solarized                       " Set a theme NOTE(ar) also enable terminal solarized theme 
 "colorscheme darcula                        " Set a theme NOTE(ar) turn off terminal solarized theme too?
-"set guifont=Monospace\ 12                  " Set the font & size
-set guifont=Source\ code\ pro\ 12           " Set the font & size
-syntax enable                               " Switch syntax highlighting on, when the terminal has colors
+set guifont=Monospace\ 12                   " Set the font & size
+"set guifont=Source\ code\ pro\ 12          " Set the font & size
+
 
 " Behaviour
 set backspace=indent,eol,start              " allow backspacing over everything in insert mode
@@ -72,11 +85,11 @@ set secure                                  " limit what can be done in project 
 " Searching
 set incsearch                               " search as you type
 set hlsearch                                " highlight matches
-nnoremap gV `[v`]                           " highlight the last inserted text TODO working
+"nnoremap gV `[v`]                           " highlight the last inserted text TODO working
 
 " Movement
-nnoremap j gj                               " do not jump over wrapped lines
-nnoremap k gk                               " do not jump over wrapped lines
+"nnoremap j gj                               " do not jump over wrapped lines
+"nnoremap k gk                               " do not jump over wrapped lines
 
 " Always jump to the last known cursor position
 autocmd BufReadPost *           
@@ -148,3 +161,8 @@ nmap <F8> :TagbarToggle<CR>                                         " Toggle tag
 let g:airline#extensions#tabline#enabled = 1                        " Show buffers in the status bar if there is only one tab open
 set laststatus=2                                                    " Always show our status line
 let g:airline_theme='solarized'                                     " Set a theme to use
+
+" comfortable-motion
+" Ctrl+d/Crtl+u or Ctrl+f/Ctrl+b or Ctrl+e/Ctrl+y scrolls the window without moving the cursor
+let g:comfortable_motion_scroll_down_key = "j"
+let g:comfortable_motion_scroll_up_key = "k"
