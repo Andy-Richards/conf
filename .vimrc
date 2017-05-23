@@ -18,7 +18,9 @@ Plugin 'terryma/vim-multiple-cursors'       " Multi select ala Sublime
 Plugin 'majutsushi/tagbar'                  " ctags browser
 Plugin 'vim-airline/vim-airline'            " better status bar
 Plugin 'vim-airline/vim-airline-themes'     " better status bar themes
-Plugin 'yuttie/comfortable-motion.vim'      " Smooth scrolling :-)
+"Plugin 'yuttie/comfortable-motion.vim'      " Smooth scrolling :-)
+Plugin 'ervandew/supertab'                  " Tab completion
+Plugin 'tpope/vim-fugitive'                 " Git integration
 
 " Language plugins
 
@@ -43,9 +45,10 @@ syntax enable                               " Switch syntax highlighting on, whe
 set background=dark                         " Which solarized theme light or dark
 colorscheme solarized                       " Set a theme NOTE(ar) also enable terminal solarized theme 
 "colorscheme darcula                        " Set a theme NOTE(ar) turn off terminal solarized theme too?
-set guifont=Monospace\ 12                   " Set the font & size
-"set guifont=Source\ code\ pro\ 12          " Set the font & size
-
+if has('gui_running')                       " NOTE(ar) remember to set this in the terminal for the console too so that airline symbols work
+    "set guifont=Monospace\ 12              " Set the font & size
+    set guifont=Source\ Code\ Pro\ Medium\ 12 " Set the font & size
+endif
 
 " Behaviour
 set backspace=indent,eol,start              " allow backspacing over everything in insert mode
@@ -120,7 +123,7 @@ let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'      " tell CtrlP
 
 " NERDTree
 " ctrl+ww switch windows or ctrl+w h (move left) or ctrl+w l (move right)
-map <C-n> :NERDTreeToggle<CR>                                       " ctrl+n toggles nerd tree
+nmap <F7> :NERDTreeToggle<CR>                                       " ctrl+n toggles nerd tree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif   " automatically close nerd tree if its the only remaining buffer
 
 " Syntastic
@@ -161,8 +164,13 @@ nmap <F8> :TagbarToggle<CR>                                         " Toggle tag
 let g:airline#extensions#tabline#enabled = 1                        " Show buffers in the status bar if there is only one tab open
 set laststatus=2                                                    " Always show our status line
 let g:airline_theme='solarized'                                     " Set a theme to use
+let g:airline_powerline_fonts = 1                                   " Use powerline symbols
+"if !exists('g:airline_symbols')                                     " Prevent powerline font symbols from messing up
+"  let g:airline_symbols = {}
+"endif
+"let g:airline_symbols.space = "\ua0"
 
 " comfortable-motion
 " Ctrl+d/Crtl+u or Ctrl+f/Ctrl+b or Ctrl+e/Ctrl+y scrolls the window without moving the cursor
-let g:comfortable_motion_scroll_down_key = "j"
-let g:comfortable_motion_scroll_up_key = "k"
+"let g:comfortable_motion_scroll_down_key = "j"
+"let g:comfortable_motion_scroll_up_key = "k"
