@@ -14,8 +14,7 @@ Plugin 'scrooloose/nerdtree'                " File system browser
 Plugin 'scrooloose/syntastic'               " Syntax checking. NOTE(ar) remember to add any required external checkers
 Plugin 'mileszs/ack.vim'                    " Run ack or ag (replaces grep) 
 Plugin 'scrooloose/nerdcommenter'           " Block commenting
-Plugin 'terryma/vim-multiple-cursors'       " Multi select ala Sublime
-Plugin 'majutsushi/tagbar'                  " ctags browser
+Plugin 'terryma/vim-multiple-cursors'       " Multi select ala Sublime Plugin 'majutsushi/tagbar'                  " ctags browser
 Plugin 'vim-airline/vim-airline'            " better status bar
 Plugin 'vim-airline/vim-airline-themes'     " better status bar themes
 "Plugin 'yuttie/comfortable-motion.vim'      " Smooth scrolling :-)
@@ -88,11 +87,13 @@ set secure                                  " limit what can be done in project 
 " Searching
 set incsearch                               " search as you type
 set hlsearch                                " highlight matches
-"nnoremap gV `[v`]                           " highlight the last inserted text TODO working
+nnoremap <leader><space> :nohlsearch<CR>    " turn off search highlight
 
 " Movement
 "nnoremap j gj                               " do not jump over wrapped lines
 "nnoremap k gk                               " do not jump over wrapped lines
+"nnoremap B ^                                " beginning of line TODO remaps word boundary which is useful
+"nnoremap E $                                " end of line TODO remaps word boundary which is useful
 
 " Always jump to the last known cursor position
 autocmd BufReadPost *           
@@ -101,8 +102,8 @@ autocmd BufReadPost *
 \ endif
 
 " Mappings
-let mapleader=","                                                   " set my preferred leader key for custom bindings
-"inoremap jk <esc>                                                  " FIXME when in insert mode <esc> is too far away - this is misbehaving
+"let mapleader=","                                                   " set my preferred leader key for custom bindings
+"inoremap jk <esc>                                                  " when in insert mode <esc> is too far away - FIXME cursor moves to a random position"
 nnoremap <leader>u :UndotreeToggle<CR>                              " toggle undo tree
 nnoremap <leader>sv :source $MYVIMRC<CR>                            " source my vimrc
 nnoremap <leader>s :mksession<CR>                                   " Save all files as a session. Use vim -S to reopen the session
