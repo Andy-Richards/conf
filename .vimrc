@@ -34,7 +34,7 @@ Plugin 'vim-erlang/vim-erlang-omnicomplete.git'     " Omnicompletion via |i_CTRL
 Plugin 'elixir-lang/vim-elixir'             " Elixir support, syntax highlighting, filetype detection and auto indentation etc
 
 call vundle#end()
-filetyp plugin indent on                    " Enable plug-ins, file type detection and indentation 
+filetype plugin indent on                    " Enable plug-ins, file type detection and indentation 
 
 " L&F 
 if has('gui_running')                      
