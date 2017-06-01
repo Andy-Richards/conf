@@ -13,21 +13,24 @@ Plugin 'kien/ctrlp.vim'                     " Fuzzy file matching
 Plugin 'scrooloose/nerdtree'                " File system browser
 Plugin 'scrooloose/syntastic'               " Syntax checking. NOTE(ar) remember to add any required external checkers
 Plugin 'mileszs/ack.vim'                    " Run ack or ag (replaces grep) 
-Plugin 'scrooloose/nerdcommenter'           " Block commenting
-Plugin 'terryma/vim-multiple-cursors'       " Multi select ala Sublime Plugin 'majutsushi/tagbar'                  " ctags browser
+Plugin 'scrooloose/nerdcommenter'           " Block commenting. comment: <leader>cc toggle: <leader>\c<space>. Also see gvim menu item 
+Plugin 'terryma/vim-multiple-cursors'       " Multi select ala Sublime Plugin 'majutsushi/tagbar'                 
+Plugin 'majutsushi/tagbar'                  " ctags browser
 Plugin 'vim-airline/vim-airline'            " better status bar
 Plugin 'vim-airline/vim-airline-themes'     " better status bar themes
-"Plugin 'yuttie/comfortable-motion.vim'      " Smooth scrolling :-)
 Plugin 'ervandew/supertab'                  " Tab completion
 Plugin 'tpope/vim-fugitive'                 " Git integration
+Plugin 'easymotion/vim-easymotion'          " Better vim motions eg <leader><leader>w <leader><leader>f{char}
 
-" Language plugins
+
+" Language plugin
 
 " Erlang 
-" Better Erlang plugins? https://vim-erlang.github.io/ 
+" Better Erlang plugins? https://vim-erlang.github.io/  FIXME vim motions and text objects see wiki
 Plugin 'vim-erlang/vim-erlang-omnicomplete.git'     " Omnicompletion via |i_CTRL-X_CTRL-O|
 "Plugin 'vim-erlang/vim-erlang-compiler.git'        " Erlang syntax checking and copiler - TODO will conflict with Syntastic? why not just use :make ?
-"Plugin 'vim-erlang/vim-erlang-tags.git'            " Generate module:function tags using :ErlangTags and set tags^=./tags
+"Plugin 'vim-erlang/vim-erlang-tags.git'            " Generate module:function tags vsing :ErlangTags and set tags^=./tags
+Plugin 'vim-erlang/erlang-motions.vim.git'          " Erlang motions ]], [[, ]m,[m, ]M, [M, ][, [] and text objects im, am, iM, aM eg vaM
 
 " Elixir
 Plugin 'elixir-lang/vim-elixir'             " Elixir support, syntax highlighting, filetype detection and auto indentation etc
@@ -54,7 +57,7 @@ set backspace=indent,eol,start              " allow backspacing over everything 
 set history=200         		            " keep 200 lines of command line history
 set ruler		                            " show the cursor position all the time
 set cursorline                              " highlight the current line
-set showcmd		                            " display incomplete commands
+set showcmd		                            " display incomplete commands (bottom right of the screen)
 set incsearch		                        " do incremental searching
 set wildmenu                                " autocomplete for the command menu
 set lazyredraw                              " redraw only when necessary
@@ -66,12 +69,20 @@ set showbreak=↪                             " Append arrow to wrapped lines
 "set spelllang=en_gb spell                  " Enable spelling and a proper dictionary TODO(ar) need to configure this to only spell check comments
 set tabstop=4                               " number of visual spaces per TAB
 set softtabstop=4                           " number of spaces in tab when editing
-set shiftwidth=4                            " make an indent correspond to a single tab
+set shiftwidth=4                            " make an indent correspond to a single tab, ie for indenting blocks of text/code >>, <<, 5>> , >i{, <i{ etc
 set expandtab                               " turns tabs into spaces
-"noremap <Up> <Nop>                         " Temporarily disable the arrow keys
-"noremap <Down> <Nop>                       " Temporarily disable the arrow keys
-"noremap <Left> <Nop>                       " Temporarily disable the arrow keys
-"noremap <Right> <Nop>                      " Temporarily disable the arrow keys
+"nnoremap <Up> <Nop>                         " Temporarily disable the arrow keys
+"vnoremap <Up> <Nop>                         " Temporarily disable the arrow keys
+"inoremap <Up> <Nop>                         " Temporarily disable the arrow keys
+"nnoremap <Down> <Nop>                       " Temporarily disable the arrow keys
+"vnoremap <Down> <Nop>                       " Temporarily disable the arrow keys
+"inoremap <Down> <Nop>                       " Temporarily disable the arrow keys
+"nnoremap <Left> <Nop>                       " Temporarily disable the arrow keys
+"vnoremap <Left> <Nop>                       " Temporarily disable the arrow keys
+"inoremap <Left> <Nop>                       " Temporarily disable the arrow keys
+"nnoremap <Right> <Nop>                      " Temporarily disable the arrow keys
+"vnoremap <Right> <Nop>                      " Temporarily disable the arrow keys
+"inoremap <Right> <Nop>                      " Temporarily disable the arrow keys
 runtime macros/machit.vim                   " Enhance the % bracket jump command
 
 " Backup to a ~/.vim-tmp dir to prevent losing unsaved data
@@ -106,7 +117,7 @@ autocmd BufReadPost *
 "inoremap jk <esc>                                                  " when in insert mode <esc> is too far away - FIXME cursor moves to a random position"
 nnoremap <leader>u :UndotreeToggle<CR>                              " toggle undo tree
 nnoremap <leader>sv :source $MYVIMRC<CR>                            " source my vimrc
-nnoremap <leader>s :mksession<CR>                                   " Save all files as a session. Use vim -S to reopen the session
+"nnoremap <leader>s :mksession<CR>                                   " Save all files as a session. Use vim -S to reopen the session
 
 " Language specifics
 augroup project
@@ -127,6 +138,9 @@ let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'      " tell CtrlP
 nmap <F7> :NERDTreeToggle<CR>                                       " ctrl+n toggles nerd tree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif   " automatically close nerd tree if its the only remaining buffer
 
+"NERDCommenter
+let g:NERDDefaultAlign = 'left'                                     " Left align
+
 " Syntastic
 " TODO(ar) recommended settings return to these. See :h syntastic & :h syntastic-checkers
 set statusline+=%#warningmsg#
@@ -144,14 +158,11 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
-" Ag
-" TODO(ar) some testing or we use universal ctags / TagBar bundle
 " The Silver Searcher (ag) 
 set grepprg=ag\ --vimgrep\ $*                                       " use ag insted of grep 
 set grepformat=%f:%l:%c:%m
 
 " vim-multiple-cursors
-" TODO(ar) not just word boundaries?
 let g:multi_cursor_use_default_mapping=0
 let g:multi_cursor_next_key='<C-S-n>'                               " Conflicts with CtrlP mappings so map to Ctrl+Shift+n
 let g:multi_cursor_prev_key='<C-S-p>'                               " Conflicts with CtrlP mappings so map to Ctrl+Shift+x
@@ -161,17 +172,22 @@ let g:multi_cursor_quit_key='<Esc>'
 " tagbar
 nmap <F8> :TagbarToggle<CR>                                         " Toggle tagbar
 
+" Easy motion defaults
+" TODO(ar) These are the minimal defaults see :h easymotion.txt
+"let g:EasyMotion_do_mapping = 0                                     " Disable default mappings
+"nmap s <Plug>(easymotion-overwin-f)                                 " Jump to anywhere you want with minimal keystrokes, with just one key binding. `s{char}{label}`
+"nmap s <Plug>(easymotion-overwin-f2)                                " or `s{char}{char}{label}` Need one more keystroke, but on average, it may be more comfortable.
+"let g:EasyMotion_smartcase = 1                                      " Turn on case insensitive feature
+"map <Leader>j <Plug>(easymotion-j)                                  " JK motions: Line motions
+"map <Leader>k <Plug>(easymotion-k)                                  " JK motions: Line motions
+
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1                        " Show buffers in the status bar if there is only one tab open
 set laststatus=2                                                    " Always show our status line
 let g:airline_theme='solarized'                                     " Set a theme to use
 let g:airline_powerline_fonts = 1                                   " Use powerline symbols
-"if !exists('g:airline_symbols')                                     " Prevent powerline font symbols from messing up
-"  let g:airline_symbols = {}
-"endif
-"let g:airline_symbols.space = "\ua0"
+let g:airline#extensions#whitespace#enabled = 0                     " Toggle detection of whitespace
 
-" comfortable-motion
-" Ctrl+d/Crtl+u or Ctrl+f/Ctrl+b or Ctrl+e/Ctrl+y scrolls the window without moving the cursor
-"let g:comfortable_motion_scroll_down_key = "j"
-"let g:comfortable_motion_scroll_up_key = "k"
+" SuperTab
+let g:SuperTabMappingForward = '<c-space>'                          " Remap supertab to <CTRL-SPACE>
+let g:SuperTabMappingBackward = '<s-c-space>'                       " Remap supertab to <SHIFT-CTRL-SPACE>
