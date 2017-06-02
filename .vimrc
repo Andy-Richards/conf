@@ -7,7 +7,7 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'               " Manage vim bundles
 Plugin 'altercation/vim-colors-solarized'   " Solarized theme
-Plugin 'blueshirts/darcula'                 " IntelliJ darcula theme. NOTE(ar) symlink from ~/vim/colors/darcula.vim to ~/vim/bundle/darcula/colors/darkula.vim
+"Plugin 'blueshirts/darcula'                 " IntelliJ darcula theme. NOTE(ar) symlink from ~/vim/colors/darcula.vim to ~/vim/bundle/darcula/colors/darkula.vim
 Plugin 'mbbill/undotree'                    " A visual tree of undos
 Plugin 'kien/ctrlp.vim'                     " Fuzzy file matching
 Plugin 'scrooloose/nerdtree'                " File system browser
@@ -20,10 +20,9 @@ Plugin 'vim-airline/vim-airline'            " better status bar
 Plugin 'vim-airline/vim-airline-themes'     " better status bar themes
 Plugin 'ervandew/supertab'                  " Tab completion
 Plugin 'tpope/vim-fugitive'                 " Git integration
-Plugin 'easymotion/vim-easymotion'          " Better vim motions eg <leader><leader>w <leader><leader>f{char}
 
 
-" Language plugin
+" Language plugins
 
 " Erlang 
 " Better Erlang plugins? https://vim-erlang.github.io/  FIXME vim motions and text objects see wiki
@@ -36,7 +35,7 @@ Plugin 'vim-erlang/erlang-motions.vim.git'          " Erlang motions ]], [[, ]m,
 Plugin 'elixir-lang/vim-elixir'             " Elixir support, syntax highlighting, filetype detection and auto indentation etc
 
 call vundle#end()
-filetype plugin indent on                    " Enable plug-ins, file type detection and indentation 
+filetype plugin indent on                   " Enable plug-ins, file type detection and indentation 
 
 " L&F 
 if has('gui_running')                      
@@ -71,19 +70,15 @@ set tabstop=4                               " number of visual spaces per TAB
 set softtabstop=4                           " number of spaces in tab when editing
 set shiftwidth=4                            " make an indent correspond to a single tab, ie for indenting blocks of text/code >>, <<, 5>> , >i{, <i{ etc
 set expandtab                               " turns tabs into spaces
-"nnoremap <Up> <Nop>                         " Temporarily disable the arrow keys
-"vnoremap <Up> <Nop>                         " Temporarily disable the arrow keys
-"inoremap <Up> <Nop>                         " Temporarily disable the arrow keys
-"nnoremap <Down> <Nop>                       " Temporarily disable the arrow keys
-"vnoremap <Down> <Nop>                       " Temporarily disable the arrow keys
-"inoremap <Down> <Nop>                       " Temporarily disable the arrow keys
-"nnoremap <Left> <Nop>                       " Temporarily disable the arrow keys
-"vnoremap <Left> <Nop>                       " Temporarily disable the arrow keys
-"inoremap <Left> <Nop>                       " Temporarily disable the arrow keys
-"nnoremap <Right> <Nop>                      " Temporarily disable the arrow keys
-"vnoremap <Right> <Nop>                      " Temporarily disable the arrow keys
-"inoremap <Right> <Nop>                      " Temporarily disable the arrow keys
+set nrformats-=octal                        " Treat numerals such as 007 as decimal and not octal when adding 10<ctrl>a or subtracting 10<ctrl>x. Default in vim8.
 runtime macros/machit.vim                   " Enhance the % bracket jump command
+
+" Using the arrow keys while in insert mode creates a new undo chunk as if we had switched back to normal mode to use h,j,k, or l.
+" This also has implications on the operation of the dot command so we disable these keys.
+noremap <Up> :echo "No no no arrow keys!"<CR>
+noremap <Down> :echo "No no no arrow keys!"<CR>
+noremap <Left> :echo "No no no arrow keys!"<CR>
+noremap <Right> :echo "No no no arrow keys!"<CR>
 
 " Backup to a ~/.vim-tmp dir to prevent losing unsaved data
 set backup
@@ -103,8 +98,6 @@ nnoremap <leader><space> :nohlsearch<CR>    " turn off search highlight
 " Movement
 "nnoremap j gj                               " do not jump over wrapped lines
 "nnoremap k gk                               " do not jump over wrapped lines
-"nnoremap B ^                                " beginning of line TODO remaps word boundary which is useful
-"nnoremap E $                                " end of line TODO remaps word boundary which is useful
 
 " Always jump to the last known cursor position
 autocmd BufReadPost *           
@@ -171,15 +164,6 @@ let g:multi_cursor_quit_key='<Esc>'
 
 " tagbar
 nmap <F8> :TagbarToggle<CR>                                         " Toggle tagbar
-
-" Easy motion defaults
-" TODO(ar) These are the minimal defaults see :h easymotion.txt
-"let g:EasyMotion_do_mapping = 0                                     " Disable default mappings
-"nmap s <Plug>(easymotion-overwin-f)                                 " Jump to anywhere you want with minimal keystrokes, with just one key binding. `s{char}{label}`
-"nmap s <Plug>(easymotion-overwin-f2)                                " or `s{char}{char}{label}` Need one more keystroke, but on average, it may be more comfortable.
-"let g:EasyMotion_smartcase = 1                                      " Turn on case insensitive feature
-"map <Leader>j <Plug>(easymotion-j)                                  " JK motions: Line motions
-"map <Leader>k <Plug>(easymotion-k)                                  " JK motions: Line motions
 
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1                        " Show buffers in the status bar if there is only one tab open
