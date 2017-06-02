@@ -106,11 +106,12 @@ autocmd BufReadPost *
 \ endif
 
 " Mappings
-"let mapleader=","                                                   " set my preferred leader key for custom bindings
-"inoremap jk <esc>                                                  " when in insert mode <esc> is too far away - FIXME cursor moves to a random position"
+"let mapleader=","                                                  " set my preferred leader key for custom bindings
+" Remap <Esc> as its too far away. <ctrl>[ exits INSERT mode too. NB comment must not be on the same line as map tries to interpret the the blank spaces after <Esc>
+inoremap jk <Esc> 
 nnoremap <leader>u :UndotreeToggle<CR>                              " toggle undo tree
 nnoremap <leader>sv :source $MYVIMRC<CR>                            " source my vimrc
-"nnoremap <leader>s :mksession<CR>                                   " Save all files as a session. Use vim -S to reopen the session
+"nnoremap <leader>s :mksession<CR>                                  " Save all files as a session. Use vim -S to reopen the session
 
 " Language specifics
 augroup project
