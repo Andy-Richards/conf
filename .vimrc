@@ -1,3 +1,54 @@
+"
+" Useful commands cheatsheet;
+"
+" Operators
+"   c Change
+"   d Delete
+"   diw delete inner word
+"   daw delete around word
+"   y Yank into register
+"   g~ Swap case
+"   gu Make lowercase
+"   gU Make uppercase
+"   > Shift right
+"   < Shift left
+"   = Autoindent
+"   ! Filter {motion} lines through an external program
+"
+" Write with sudo priviliges
+"   :w !sudo tee % " 
+"
+" Insert mode, command line mode & bash shortcuts
+"   <C+h> Delete back one character
+"   <C+w> Delete back one word
+"   <C+u> Delete back to start of the line
+"   <C+r>{register} paste from a register while in insert mode.
+"   <C+r><C+p>{register} paste from a register as is (no auto indentation etc)
+"   <C+r>= epression register
+"   <C+o> insert normal mode
+"
+" Simple arithmetic
+"   <C+a> Add
+"   <C+x> Subtract  
+"
+" Commenting (Also see gvim menu item)
+"   Comment out [count]<leader>cc 
+"   Toggle comment [count]<leader>c<space>
+"
+" Erlang
+"   Omincompletion (insert mode) <C+x><C+o>
+"   motions ]], [[, ]m,[m, ]M, [M, ][, []
+"   text objects im, am, iM, aM eg vaM
+       
+" Elixir
+"   Omincompletion (insert mode) <C+x><C+o>
+"   docs (normal mode) <K> while on fun or module
+"   docs (command mode) :ExDoc Mod/fun or Mod.fun
+"   Jump to definition (command mode) :ExDef Mod/fun 
+"   Jump to definition (normal mode) <C-]>
+"   Jump through tag stack (normal mode) <C-T>
+"   Mix :Mix command
+
 " Vundle 
 set nocompatible                            " Use vim not vi
 filetype off 
@@ -13,7 +64,7 @@ Plugin 'kien/ctrlp.vim'                     " Fuzzy file matching
 Plugin 'scrooloose/nerdtree'                " File system browser
 Plugin 'scrooloose/syntastic'               " Syntax checking. NOTE(ar) remember to add any required external checkers
 Plugin 'mileszs/ack.vim'                    " Run ack or ag (replaces grep) 
-Plugin 'scrooloose/nerdcommenter'           " Block commenting. comment: <leader>cc toggle: <leader>\c<space>. Also see gvim menu item 
+Plugin 'scrooloose/nerdcommenter'           " Block commenting.
 Plugin 'terryma/vim-multiple-cursors'       " Multi select ala Sublime Plugin 'majutsushi/tagbar'                 
 Plugin 'majutsushi/tagbar'                  " ctags browser
 Plugin 'vim-airline/vim-airline'            " better status bar
@@ -26,13 +77,14 @@ Plugin 'tpope/vim-fugitive'                 " Git integration
 
 " Erlang 
 " Better Erlang plugins? https://vim-erlang.github.io/  FIXME vim motions and text objects see wiki
-Plugin 'vim-erlang/vim-erlang-omnicomplete.git'     " Omnicompletion via |i_CTRL-X_CTRL-O|
+Plugin 'vim-erlang/vim-erlang-omnicomplete.git'     " Omnicompletion 
 "Plugin 'vim-erlang/vim-erlang-compiler.git'        " Erlang syntax checking and copiler - TODO will conflict with Syntastic? why not just use :make ?
 "Plugin 'vim-erlang/vim-erlang-tags.git'            " Generate module:function tags vsing :ErlangTags and set tags^=./tags
-Plugin 'vim-erlang/erlang-motions.vim.git'          " Erlang motions ]], [[, ]m,[m, ]M, [M, ][, [] and text objects im, am, iM, aM eg vaM
+Plugin 'vim-erlang/erlang-motions.vim.git'          " Erlang motions & text objects 
 
 " Elixir
 Plugin 'elixir-lang/vim-elixir'             " Elixir support, syntax highlighting, filetype detection and auto indentation etc
+Plugin 'slashmili/alchemist.vim'            " Elixir omnicompletion, documentation, definitions, mix & iex integration etc
 
 call vundle#end()
 filetype plugin indent on                   " Enable plug-ins, file type detection and indentation 
@@ -107,7 +159,7 @@ autocmd BufReadPost *
 
 " Mappings
 "let mapleader=","                                                  " set my preferred leader key for custom bindings
-" Remap <Esc> as its too far away. <ctrl>[ exits INSERT mode too. NB comment must not be on the same line as map tries to interpret the the blank spaces after <Esc>
+" Remap <Esc> as its too far away. <ctrl>[ exits INSERT mode too. NB this comment must not be on the same line as map tries to interpret the the blank spaces after <Esc>
 inoremap jk <Esc> 
 nnoremap <leader>u :UndotreeToggle<CR>                              " toggle undo tree
 nnoremap <leader>sv :source $MYVIMRC<CR>                            " source my vimrc
@@ -166,7 +218,7 @@ let g:multi_cursor_quit_key='<Esc>'
 " tagbar
 nmap <F8> :TagbarToggle<CR>                                         " Toggle tagbar
 
-" vim-airline
+" vim-airlines
 let g:airline#extensions#tabline#enabled = 1                        " Show buffers in the status bar if there is only one tab open
 set laststatus=2                                                    " Always show our status line
 let g:airline_theme='solarized'                                     " Set a theme to use
@@ -174,5 +226,8 @@ let g:airline_powerline_fonts = 1                                   " Use powerl
 let g:airline#extensions#whitespace#enabled = 0                     " Toggle detection of whitespace
 
 " SuperTab
-let g:SuperTabMappingForward = '<c-space>'                          " Remap supertab to <CTRL-SPACE>
-let g:SuperTabMappingBackward = '<s-c-space>'                       " Remap supertab to <SHIFT-CTRL-SPACE>
+let g:SuperTabMappingForward = '<c-tab>'                            " Remap supertab to <CTRL-SPACE>
+let g:SuperTabMappingBackward = '<s-c-tab>'                         " Remap supertab to <SHIFT-CTRL-SPACE>
+
+" Elixir Alchemist
+"let g:alchemist#elixir_erlang_src = "/usr/local/share/src"
